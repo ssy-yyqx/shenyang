@@ -1,0 +1,23 @@
+/**
+ * Cesium - https://github.com/AnalyticalGraphicsInc/cesium
+ *
+ * Copyright 2011-2020 Cesium Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Columbus View (Pat. Pend.)
+ *
+ * Portions licensed separately.
+ * See https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md for full licensing details.
+ */
+define(["./when-4ca4e419","./Check-430b3551","./Math-c0afb7aa","./Cartesian2-0cd32dae","./defineProperties-24e785e9","./Transforms-1f147cce","./RuntimeError-443472b0","./WebGLConstants-2ddfa2f9","./ComponentDatatype-adb4702b","./GeometryAttribute-ebf6a4c7","./GeometryAttributes-614c63f8","./IndexDatatype-a78bfe07","./IntersectionTests-9618f995","./Plane-6d029ea4","./EllipsoidTangentPlane-6e29c6f6","./EllipsoidRhumbLine-aeb03c9a","./PolygonPipeline-d378df2d","./EllipsoidGeodesic-f0d5153e","./PolylinePipeline-1211a424","./WallGeometryLibrary-9676c43f"],function(v,e,C,b,i,H,t,a,A,P,k,w,n,r,o,s,l,d,m,G){"use strict";var L=new b.Cartesian3,x=new b.Cartesian3;function u(e){var i=(e=v.defaultValue(e,v.defaultValue.EMPTY_OBJECT)).positions,t=e.maximumHeights,a=e.minimumHeights,n=v.defaultValue(e.granularity,C.CesiumMath.RADIANS_PER_DEGREE),e=v.defaultValue(e.ellipsoid,b.Ellipsoid.WGS84);this._positions=i,this._minimumHeights=a,this._maximumHeights=t,this._granularity=n,this._ellipsoid=b.Ellipsoid.clone(e),this._workerName="createWallOutlineGeometry";i=1+i.length*b.Cartesian3.packedLength+2;v.defined(a)&&(i+=a.length),v.defined(t)&&(i+=t.length),this.packedLength=i+b.Ellipsoid.packedLength+1}u.pack=function(e,i,t){var a;t=v.defaultValue(t,0);var n=e._positions,r=n.length;for(i[t++]=r,a=0;a<r;++a,t+=b.Cartesian3.packedLength)b.Cartesian3.pack(n[a],i,t);var o=e._minimumHeights,r=v.defined(o)?o.length:0;if(i[t++]=r,v.defined(o))for(a=0;a<r;++a)i[t++]=o[a];var s=e._maximumHeights;if(r=v.defined(s)?s.length:0,i[t++]=r,v.defined(s))for(a=0;a<r;++a)i[t++]=s[a];return b.Ellipsoid.pack(e._ellipsoid,i,t),i[t+=b.Ellipsoid.packedLength]=e._granularity,i};var p=b.Ellipsoid.clone(b.Ellipsoid.UNIT_SPHERE),f={positions:void 0,minimumHeights:void 0,maximumHeights:void 0,ellipsoid:p,granularity:void 0};return u.unpack=function(e,i,t){i=v.defaultValue(i,0);for(var a,n,r=e[i++],o=new Array(r),s=0;s<r;++s,i+=b.Cartesian3.packedLength)o[s]=b.Cartesian3.unpack(e,i);if(0<(r=e[i++]))for(a=new Array(r),s=0;s<r;++s)a[s]=e[i++];if(0<(r=e[i++]))for(n=new Array(r),s=0;s<r;++s)n[s]=e[i++];var l=b.Ellipsoid.unpack(e,i,p),d=e[i+=b.Ellipsoid.packedLength];return v.defined(t)?(t._positions=o,t._minimumHeights=a,t._maximumHeights=n,t._ellipsoid=b.Ellipsoid.clone(l,t._ellipsoid),t._granularity=d,t):(f.positions=o,f.minimumHeights=a,f.maximumHeights=n,f.granularity=d,new u(f))},u.fromConstantHeights=function(e){var i=(e=v.defaultValue(e,v.defaultValue.EMPTY_OBJECT)).positions,t=e.minimumHeight,a=e.maximumHeight,n=v.defined(t),r=v.defined(a);if(n||r)for(var o=i.length,s=n?new Array(o):void 0,l=r?new Array(o):void 0,d=0;d<o;++d)n&&(s[d]=t),r&&(l[d]=a);return new u({positions:i,maximumHeights:l,minimumHeights:s,ellipsoid:e.ellipsoid})},u.createGeometry=function(e){var i=e._positions,t=e._minimumHeights,a=e._maximumHeights,n=e._granularity,e=e._ellipsoid,t=G.WallGeometryLibrary.computePositions(e,i,a,t,n,!1);if(v.defined(t)){var r=t.bottomPositions,o=t.topPositions,s=o.length,n=2*s,l=new Float64Array(n),d=0;for(s/=3,c=0;c<s;++c){var m=3*c,u=b.Cartesian3.fromArray(o,m,L),m=b.Cartesian3.fromArray(r,m,x);l[d++]=m.x,l[d++]=m.y,l[d++]=m.z,l[d++]=u.x,l[d++]=u.y,l[d++]=u.z}for(var t=new k.GeometryAttributes({position:new P.GeometryAttribute({componentDatatype:A.ComponentDatatype.DOUBLE,componentsPerAttribute:3,values:l})}),p=n/3,n=2*p-4+p,f=w.IndexDatatype.createTypedArray(p,n),h=0,c=0;c<p-2;c+=2){var g=c,y=c+2,E=b.Cartesian3.fromArray(l,3*g,L),_=b.Cartesian3.fromArray(l,3*y,x);b.Cartesian3.equalsEpsilon(E,_,C.CesiumMath.EPSILON10)||(E=c+1,_=c+3,f[h++]=E,f[h++]=g,f[h++]=E,f[h++]=_,f[h++]=g,f[h++]=y)}return f[h++]=p-2,f[h++]=p-1,new P.Geometry({attributes:t,indices:f,primitiveType:P.PrimitiveType.LINES,boundingSphere:new H.BoundingSphere.fromVertices(l)})}},function(e,i){return(e=v.defined(i)?u.unpack(e,i):e)._ellipsoid=b.Ellipsoid.clone(e._ellipsoid),u.createGeometry(e)}});

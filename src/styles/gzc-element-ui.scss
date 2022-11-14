@@ -1,0 +1,105 @@
+
+.table-section{
+  .el-table th{
+    background: #1F7CD7;
+    color: #fff;
+  }
+}
+.qiefens{
+  .el-dialog__header{
+    padding: 23px;
+    background: #1F7CD7;
+    .el-dialog__headerbtn{
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      padding: 0;
+      background: 0 0;
+      border: none;
+      outline: 0;
+      cursor: pointer;
+      font-size: 16px;
+      .el-dialog__close{
+        color: white;
+      }
+    }
+  }
+  .el-dialog__body {
+    padding: 0px 20px;
+    color: #606266;
+    font-size: 14px;
+    word-break: break-all;
+  }
+}
+.qiefen-dialog-class{
+  .el-dialog__body{
+    padding: 10px 20px;
+  }
+}
+.qiefen-dialog-class{
+  margin-top: 4vh !important;
+  .el-dialog__header{
+    padding: 10px 20px;
+    background: #1F7CD7;
+    .el-dialog__title{
+      font-weight: bold;
+      line-height: 18px;
+      font-size: 14px;
+      color: #fff;
+    }
+    .el-dialog__headerbtn{
+      top: 10px;
+      right: 10px;
+      i{
+        color: #fff;
+      }
+    }
+  }
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+  .el-dialog__footer{
+    border-top:1px solid #E9EAEF;
+  }
+}
+
+.filter-tree .el-tree-node.is-current>.el-tree-node__content{
+  background: #1F7FD8;
+  color: #fff;
+}
+
+.top-form .el-form-item--small.el-form-item{
+  margin-bottom: 0;
+}
+
+.tab-province-div {
+  padding-right: 20px;
+  .el-form-item__content{
+    word-break:keep-all
+  }
+  .el-form-item__content,.el-form-item__label {
+    line-height: 18px !important;
+  }
+  .el-form-item__label{
+    font-size: 14px !important;
+  }
+  .el-form-item {
+    margin-bottom: 10px !important;
+  }
+}
+.DangerChem-margin {
+  
+  .el-form-item__content {
+    word-break: keep-all !important;
+  }
+}
+
+// .my-radio-box{
+//   .el-radio-button--small .el-radio-button__inner{
+//     width: 165px;
+//     overflow: hidden;
+//     text-overflow:ellipsis;
+//     white-space: nowrap;
+//   }
+// }
+
